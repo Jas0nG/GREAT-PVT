@@ -203,6 +203,7 @@ namespace gnut
             }
 
             transform(guess.begin(), guess.end(), guess.begin(), ::toupper);
+            std::cout << "guess: " << guess << std::endl;
 
             if (_spdlog)
                 SPDLOG_LOGGER_DEBUG(_spdlog, src + ": " + typ + " site name: " + guess + " " + sit + " identified");

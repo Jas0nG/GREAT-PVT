@@ -161,7 +161,6 @@ namespace gnut
     {
         set<string> tmp;
         string str;
-
         for (xml_node node = _doc.child(XMLKEY_ROOT).child(XMLKEY_REC).first_child(); node; node = node.next_sibling())
         {
             string name = node.name();

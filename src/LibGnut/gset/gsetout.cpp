@@ -172,10 +172,12 @@ namespace gnut
         _gmutex.unlock();
         if (tmp.empty())
         {
+            std::cout << "Warning: log level not set, using INFO" << std::endl;
             return level::level_enum::info;
         }
         else
         {
+            std::cout << "Log level set to: " << tmp << std::endl;
             if (tmp.find("ERROR") != string::npos)
             {
                 return level::level_enum::err;

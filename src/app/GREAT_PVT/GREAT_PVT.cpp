@@ -1,5 +1,6 @@
 
 #include "gcfg_ppp.h"
+#include "spdlog/spdlog.h"
 #include <chrono>
 #include <thread>
 
@@ -148,6 +149,7 @@ int main(int argc, char** argv)
         if (path.substr(0, 7) == "file://") 
         {
             SPDLOG_LOGGER_INFO(my_logger, "path is file!");
+            std::cout << "Path: " << path << std::endl;
             tgio = new t_gfile(my_logger);
             tgio->spdlog(my_logger);
             tgio->path(path);
@@ -190,7 +192,6 @@ int main(int argc, char** argv)
 
     // assigning PCV pointers to objects
     gobj->sync_pcvs();
-
     // add all data
     t_gallproc* data = new t_gallproc();
     if (gobs)data->Add_Data(t_gdata::type2str(gobs->id_type()), gobs);
@@ -221,12 +222,21 @@ int main(int argc, char** argv)
         vector<string> list_rover = gset.list_rover();  
         sites = set<string>(list_rover.begin(), list_rover.end());
     }
+    SPDLOG_LOGGER_INFO(my_logger, "Number of sites: " + int2str(sites.size()));
     int nsite = sites.size();
     set<string>::iterator it = sites.begin();
+    set<string> all_site = gobs->stations();
+    SPDLOG_LOGGER_INFO(my_logger, "Number of all sites: " + int2str(all_site.size()));
+    // show all site
+    for (auto it = all_site.begin(); it != all_site.end(); ++it)
+    {
+        SPDLOG_LOGGER_INFO(my_logger, "gobs stations: " + *it);
+    }
     while (i < nsite)
     {
         string site_base = "";
         string site = *it;
+        SPDLOG_LOGGER_INFO(my_logger, "Process Site: " + site);
         // Check site data
         if (isBase)
         {
